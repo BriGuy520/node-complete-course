@@ -19,14 +19,13 @@ const routeHandlers = (req, res) => {
   if(url === '/create-user' && method === "POST"){
     const body = [];
     req.on('data', (chunk) => {
-      console.log(chunk);
       body.push(chunk);
     });
 
     return req.on('end', () => {
       const parsedBody = Buffer.concat(body).toString();
       const username = parsedBody.split('=')[1];
-
+      
       res.write(username);
     })
   }
