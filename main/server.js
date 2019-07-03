@@ -6,7 +6,8 @@ const path = require('path');
 const app = express();
 
 app.engine('hbs', handlebars({
-  defaultLayout: null,
+  layoutsDir: 'views/layouts',
+  defaultLayout: 'main-layout',
   extname: 'hbs'
 }));
 app.set('view engine', 'hbs');
