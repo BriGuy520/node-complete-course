@@ -1,16 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const handlebars = require('express-handlebars');
+// const handlebars = require('express-handlebars');
 const path = require('path');
 
 const app = express();
 
-app.engine('hbs', handlebars({
-  layoutsDir: 'views/layouts',
-  defaultLayout: 'main-layout',
-  extname: 'hbs'
-}));
-app.set('view engine', 'hbs');
+// app.engine('hbs', handlebars({
+//   layoutsDir: 'views/layouts',
+//   defaultLayout: 'main-layout',
+//   extname: 'hbs'
+// }));
+
+app.set('view engine', 'ejs');
+// app.set('view engine', 'hbs');
 // app.set('view engine', 'pug');
 app.set('views', 'views');
 
