@@ -10,6 +10,13 @@ exports.getAddProduct = (req, res, next) => {
   });
 };
 
+exports.shopHome = (req, res, next) => {
+  res.render("shop/index", {
+    docTitle: "Home",
+    path: "/"
+  });
+}
+
 exports.postAddProduct = (req, res, next) => {
   const product = new Products(req.body.title);
   product.save();
@@ -21,10 +28,16 @@ exports.getProducts = (req, res, next) => {
     res.render('shop/product-list', { 
       prods: products, 
       docTitle: 'Shop', 
-      path: "/", 
+      path: "/products", 
       hasProducts: products.length > 0, 
       activeShop: true
     });
   });
- 
 };
+
+exports.showCart = (req, res, next) => {
+  res.render("shop/cart", {
+    docTitle: "Cart",
+    path: "/cart"
+  })
+}
