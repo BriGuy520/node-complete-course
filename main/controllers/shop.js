@@ -11,9 +11,12 @@ exports.getProducts = (req, res, next) => {
  };
 
 exports.shopHome = (req, res, next) => {
-  res.render("shop/index", {
-    docTitle: "Shop Home",
-    path: "/"
+  Products.fetchAll(products => {
+    res.render('shop/index', { 
+      prods: products, 
+      docTitle: 'All Products', 
+      path: "/products"
+    });
   });
 }
 
@@ -21,6 +24,13 @@ exports.showCart = (req, res, next) => {
   res.render("shop/cart", {
     docTitle: "Cart",
     path: "/cart"
+  });
+}
+
+exports.showOrders = (req, res, next) => {
+  res.render("shop/orders", {
+    docTitle: "Orders",
+    path: "/orders"
   });
 }
 
