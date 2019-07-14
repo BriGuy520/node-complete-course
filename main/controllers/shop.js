@@ -4,17 +4,15 @@ exports.getProducts = (req, res, next) => {
   Products.fetchAll(products => {
      res.render('shop/product-list', { 
        prods: products, 
-       docTitle: 'Shop', 
-       path: "/products", 
-       hasProducts: products.length > 0, 
-       activeShop: true
+       docTitle: 'All Products', 
+       path: "/products"
      });
    });
  };
 
 exports.shopHome = (req, res, next) => {
   res.render("shop/index", {
-    docTitle: "Home",
+    docTitle: "Shop Home",
     path: "/"
   });
 }
@@ -24,4 +22,11 @@ exports.showCart = (req, res, next) => {
     docTitle: "Cart",
     path: "/cart"
   });
+}
+
+exports.getCheckout = (req, res, next) => {
+  res.render("shop/checkout", {
+    docTitle: 'Checkout',
+    path: '/checkout'
+  })
 }
