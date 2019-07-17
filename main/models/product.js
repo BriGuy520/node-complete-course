@@ -24,11 +24,10 @@ module.exports = class Product {
     this.imageURL = imageURL;
     this.price = price;
     this.description = description;
-
   }
 
   save(){
-   
+    this.id = Math.random().toString();
     getProductsFromFile(products => {
       products.push(this);
       fs.writeFile(paths, JSON.stringify(products), (err) => {

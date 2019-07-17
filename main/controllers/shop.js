@@ -8,7 +8,13 @@ exports.getProducts = (req, res, next) => {
        path: "/products"
      });
    });
- };
+ }
+
+ exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  console.log(prodId);
+  res.redirect('/');
+}
 
 exports.shopHome = (req, res, next) => {
   Products.fetchAll(products => {

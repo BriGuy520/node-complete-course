@@ -44,15 +44,18 @@ color: black;
 color: rgb(76, 57, 185);
 }
 
+.card__actions {
+  background: purple;
+}
 
 .product-form {
-width: 20rem;
-max-width: 90%;
-margin: auto;
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
 }
 
 .form-control {
-margin: 1rem 0;
+  margin: 1rem 0;
 }
 
 .form-control label,
@@ -65,9 +68,9 @@ margin: 1rem 0;
 
 .form-control input,
 .form-control textarea {
-border: 1px solid gold;
-font: inherit;
-border-radius: 2px;
+  border: 1px solid gold;
+  font: inherit;
+  border-radius: 2px;
 }
 
 .form-control input:focus,
@@ -76,16 +79,16 @@ border-radius: 2px;
 }
 
 button {
-font: inherit;
-border: 1px solid purple;
-color: purple;
-background: white;
-border-radius: 3px;
-cursor: pointer;
+  font: inherit;
+  border: 1px solid purple;
+  color: purple;
+  background: white;
+  border-radius: 3px;
+  cursor: pointer;
 }
 
 button:hover,
 button:active {
-background-color: purple;
-color: white;
+  background-color: purple;
+  color: white;
 }
