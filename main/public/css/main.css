@@ -45,10 +45,10 @@ color: rgb(76, 57, 185);
 }
 
 .card-product-item {
-  border: 1px solid black;
   width: 400px;
   border-radius: 4px;
   margin: 5% auto;
+  box-shadow: rgb(163, 162, 162) -2px 5px 15px 5px;
 }
 
 .product__title,
@@ -72,7 +72,8 @@ color: rgb(76, 57, 185);
   margin: auto;
 }
 
-.card-product-item img {
+.card-product-item img,
+.card__image img {
   display: block;
   margin: 0 auto;
 }

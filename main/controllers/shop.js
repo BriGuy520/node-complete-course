@@ -17,7 +17,7 @@ exports.getProducts = (req, res, next) => {
       product: product,
       docTitle: product.title,
       path: '/products/' + product.id
-    })
+    });
   });
 }
 
