@@ -18,7 +18,7 @@ module.exports = class Cart {
         cart = JSON.parse(fileContent);
       }
       // Analyze the cart => find existing product
-      const existingProductIdx = cart.products.find(prod => prod.id === id);
+      const existingProductIdx = cart.products.findIndex(prod => prod.id === id);
       const existingProduct = cart.products[existingProductIdx];
       let updatedProduct; 
       if(existingProduct){
