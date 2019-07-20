@@ -27,7 +27,7 @@ exports.shopHome = (req, res, next) => {
     res.render('shop/index', { 
       prods: products, 
       docTitle: 'All Products', 
-      path: "/products"
+      path: "/"
     });
   });
 }
