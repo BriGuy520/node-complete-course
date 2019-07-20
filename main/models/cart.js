@@ -19,6 +19,7 @@ module.exports = class Cart {
       }
       // Analyze the cart => find existing product
       const existingProductIdx = cart.products.findIndex(prod => prod.id === id);
+      console.log(existingProductIdx);
       const existingProduct = cart.products[existingProductIdx];
       let updatedProduct; 
       if(existingProduct){
@@ -26,7 +27,6 @@ module.exports = class Cart {
         updatedProduct.qty = updatedProduct.qty + 1;
         cart.products = [...cart.products];
         cart.products[existingProductIdx] = updatedProduct;
-
       } else {
         updatedProduct = { id, qty: 1 };
         cart.products = [...cart.products, updatedProduct];
