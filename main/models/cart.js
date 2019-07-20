@@ -19,7 +19,6 @@ module.exports = class Cart {
       }
       // Analyze the cart => find existing product
       const existingProductIdx = cart.products.findIndex(prod => prod.id === id);
-      console.log(existingProductIdx);
       const existingProduct = cart.products[existingProductIdx];
       let updatedProduct; 
       if(existingProduct){
@@ -32,7 +31,7 @@ module.exports = class Cart {
         cart.products = [...cart.products, updatedProduct];
       }
 
-      cart.totalPrice = cart.totalPrice + productPrice;
+      cart.totalPrice = cart.totalPrice + +productPrice;
       fs.writeFile(p, JSON.stringify(cart), err => {
         console.log(err);
       });
