@@ -64,4 +64,12 @@ module.exports = class Product {
     });
   }
 
+  static removeProduct(id){
+    getProductsFromFile(products => {
+      const productIdx = products.findIndex(prod => prod.id === id);
+      console.log(products);
+      console.log(productIdx);
+    })
+  }
+
 }
