@@ -51,6 +51,9 @@ module.exports = class Product {
     // fs.readFile(paths, (err, fileContent) => {
     //   console.log(err);
     // });
+
+    return db.execute('INSERT INTO products (title, price, imageURL, description) VALUES (?, ?, ?, ?)', 
+    [this.title, this.price, this.imageURL, this.description]);
   }
 
   // static makes sure that the fetchAll method is called on 
@@ -67,6 +70,8 @@ module.exports = class Product {
 
     //   cb(product);
     // });
+
+    return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
   }
 
   static removeProduct(id){
