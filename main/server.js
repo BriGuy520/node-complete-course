@@ -6,7 +6,8 @@ const path = require('path');
 const app = express();
 
 const errorController = require("./controllers/errors");
-const db = require('./util/database');
+
+const sequelize = require('./util/database');
 
 // app.engine('hbs', handlebars({
 //   layoutsDir: 'views/layouts',
@@ -30,4 +31,10 @@ app.use(shopRoutes);
 
 app.use(errorController.errors);
 
-app.listen(3000);
+sequelize.sync()
+  .then(result => {
+    console.log(result);
+    app.listen(3000);
+  })
+  .catch(err => console.log(err));
+
