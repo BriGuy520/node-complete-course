@@ -78,11 +78,21 @@ exports.postDeleteProduct = (req, res, next) => {
 }
 
 exports.getAllProducts = (req, res, next) => {
-  Products.fetchAll(products => {
+  Products.findAll()
+  .then(products => {
     res.render('admin/products', { 
       prods: products, 
       docTitle: 'All Admin Products', 
       path: "/admin/products"
     });
-  });
+  })
+  .catch(err => console.log(err));
+ 
+  // Products.fetchAll(products => {
+  //   res.render('admin/products', { 
+  //     prods: products, 
+  //     docTitle: 'All Admin Products', 
+  //     path: "/admin/products"
+  //   });
+  // });
 }
