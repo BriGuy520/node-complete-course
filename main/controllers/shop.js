@@ -1,5 +1,4 @@
 const Products = require('../models/product');
-const Cart = require('../models/cart');
 
 exports.getProducts = (req, res, next) => {
   Products.findAll()
@@ -131,10 +130,45 @@ exports.postCart = (req, res, next) => {
 
 exports.deleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  Products.findById(prodId, product => {
-    Cart.deleteProduct(prodId, product.price);
-    res.redirect('/cart');
-  }); 
+
+req.user.getCart()
+.then(cart => {
+  return cart.getProducts({ where: { id: prodId }});
+})
+.then(products => {
+  const product = products[0];
+  return product.cartItem.destroy();
+})
+.then(result => {
+  res.redirect('/cart');
+})
+.catch(err => console.log(err));
+
+  // Products.findById(prodId, product => {
+  //   Cart.deleteProduct(prodId, product.price);
+  //   res.redirect('/cart');
+  // }); 
+}
+
+exports.postOrder = (req, res, next) => {
+  req.user.getCart()
+  .then(cart => {
+    return cart.getProducts();
+  })
+  .then(products => {
+    return req.user.createOrder()
+      .then(order => {
+        return order.addProducts(products.map(product => {
+          product.orderItem = { quantity: product.cartItem.quantity }; 
+          return product;
+        }))
+      })
+      .then(result => {
+        res.redirect('/orders');
+      })
+      .catch(err => console.log(err));
+  })
+  .catch(err => console.log(err));
 }
 
 exports.showOrders = (req, res, next) => {
