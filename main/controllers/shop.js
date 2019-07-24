@@ -161,26 +161,35 @@ exports.postOrder = (req, res, next) => {
         return order.addProducts(products.map(product => {
           product.orderItem = { quantity: product.cartItem.quantity }; 
           return product;
-        }))
-      })
-      .then(result => {
-        res.redirect('/orders');
+        }));
       })
       .catch(err => console.log(err));
+  })
+  .then(result => {
+    fetchedCart.setProducts(null);
+  })
+  .then(result => {
+    res.redirect('/orders');
   })
   .catch(err => console.log(err));
 }
 
 exports.showOrders = (req, res, next) => {
-  res.render("shop/orders", {
-    docTitle: "Orders",
-    path: "/orders"
-  });
+
+  req.user.getOrders({ include: ['products']})
+    .then(orders => {
+      res.render("shop/orders", {
+        docTitle: "Orders",
+        path: "/orders",
+        orders: orders
+      });
+    })
+    .catch(err => console.log(err));
 }
 
-exports.getCheckout = (req, res, next) => {
-  res.render("shop/checkout", {
-    docTitle: 'Checkout',
-    path: '/checkout'
-  })
-}
+// exports.getCheckout = (req, res, next) => {
+//   res.render("shop/checkout", {
+//     docTitle: 'Checkout',
+//     path: '/checkout'
+//   })
+// }
