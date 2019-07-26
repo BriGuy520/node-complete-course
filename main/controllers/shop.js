@@ -8,13 +8,12 @@ exports.getProducts = (req, res, next) => {
       docTitle: 'All Products', 
       path: "/products"
     });
-  }).catch(err => console.log(err));
-
-  
+  }).catch(err => console.log(err));  
  }
 
  exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
+
   // Products.findAll({ where: {id: prodId}})
   // .then(products => {
   //   res.render('shop/product-detail', {
@@ -24,12 +23,13 @@ exports.getProducts = (req, res, next) => {
   //   });
   // })
   // .catch(err => console.log(err));
-  Products.findByPk(prodId)
+  // Products.findByPk(prodId)
+    Products.findById(prodId)
     .then((product) => {
       res.render('shop/product-detail', {
         product: product,
         docTitle: product.title,
-        path: '/products/' + product.id
+        path: '/products' + product._id
       });
     })
     .catch(err => {
