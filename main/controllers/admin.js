@@ -1,4 +1,5 @@
 const Products = require('../models/product');
+const Users = require('../models/user');
 
 exports.getAddProduct = (req, res, next) => {  
   res.render('admin/edit-product', {
@@ -130,4 +131,23 @@ exports.getAllProducts = (req, res, next) => {
   //     path: "/admin/products"
   //   });
   // });
+
+  exports.getAddUser = (req, res, next) => {
+    res.render('admin/add-user', {
+      docTitle: 'Add Product', 
+      path: '/admin/add-user'
+    });
+  }
+
+  exports.addUser = (req, res, next) => {
+    const { username, email } = req.body;
+
+    const user = new Users(username, email);
+
+    user.save()
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => console.log(err));
+  }
 }
