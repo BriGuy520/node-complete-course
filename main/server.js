@@ -8,6 +8,8 @@ const app = express();
 const errorController = require("./controllers/errors");
 const mongoConnect = require('./util/database').mongoConnect;
 
+const User = require('./models/user');
+
 // const sequelize = require('./util/database');
 
 // const Product = require('./models/product');
@@ -35,12 +37,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  // User.findByPk(1)
-  // .then(user => {
-  //   req.user = user;
-  //   next();
-  // })
-  // .catch(err => console.log(err));
+  User.findById("5d3d238afaa20e2a80006ed3")
+  .then(user => {
+    req.user = user;
+  })
+  .catch(err => console.log(err));
   next();
 });
 
