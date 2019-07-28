@@ -8,14 +8,14 @@ class Product {
     this.price = price;
     this.description = description;
     this.imageURL = imageURL;
-    this._id = id;
+    this._id = new mongodb.ObjectId(id);
   }
 
   save(){
     const db = getDb(); 
     let dbOp;
     if(this._id){
-      dbOp = db.collection('product').updateOne({ _id: new mongodb.ObjectId(this._id) }, { $set: this });
+      dbOp = db.collection('product').updateOne({ _id: this._id}, { $set: this });
     } else {
       dbOp = db
         .collection('product')
@@ -49,6 +49,15 @@ class Product {
       .then(product => {
         console.log(product);
         return product;
+      })
+      .catch(err => console.log(err));
+  }
+
+  static deleteProduct(id){
+    const db = getDb();
+    return db.collection('product').deleteOne({ _id: new mongodb.ObjectId(id) })
+      .then(result => {
+        console.log("product deleted");
       })
       .catch(err => console.log(err));
   }
