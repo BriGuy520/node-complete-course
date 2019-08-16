@@ -86,41 +86,50 @@ exports.showCart = (req, res, next) => {
 exports.postCart = (req, res, next) => {
 
   const prodId = req.body.productId;
-  let fetchedCart;
-  let newQuantity = 1;
 
-  req.user.getCart()
-  .then(cart => {
+  Products.findById(prodId)
+    .then(product => {
+      return req.user.addToCart(product);
+    })
+    .then(result => {
+      console.log(result);
+    })
 
-    fetchedCart = cart;
+  // let fetchedCart;
+  // let newQuantity = 1;
 
-    return cart.getProducts({ where: { id: prodId } });
-  })
-  .then(products => {
+  // req.user.getCart()
+  // .then(cart => {
 
-    let product;
+  //   fetchedCart = cart;
 
-    if(products.length > 0){
-      product = products[0];
-    }
+  //   return cart.getProducts({ where: { id: prodId } });
+  // })
+  // .then(products => {
 
-    if(product){
-      //
-      let oldQuantity = product.cartItem.quantity;
-      newQuantity = oldQuantity + 1;
-      return product;
-    }
-      return Products.findByPk(prodId)
-  })
-  .then(product => {
-    return fetchedCart.addProduct(product, {
-      through: { quantity: newQuantity }
-    });
-  })
-  .then(cart => {
-    res.redirect('/cart');
-  })
-  .catch(err => console.log(err));
+  //   let product;
+
+  //   if(products.length > 0){
+  //     product = products[0];
+  //   }
+
+  //   if(product){
+  //     //
+  //     let oldQuantity = product.cartItem.quantity;
+  //     newQuantity = oldQuantity + 1;
+  //     return product;
+  //   }
+  //     return Products.findByPk(prodId)
+  // })
+  // .then(product => {
+  //   return fetchedCart.addProduct(product, {
+  //     through: { quantity: newQuantity }
+  //   });
+  // })
+  // .then(cart => {
+  //   res.redirect('/cart');
+  // })
+  // .catch(err => console.log(err));
 
   // Products.findById(prodId, product => {
   //   Cart.addProduct(prodId, product.price);
