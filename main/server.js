@@ -6,7 +6,7 @@ const path = require('path');
 const app = express();
 
 const errorController = require("./controllers/errors");
-const mongoConnect = require('./util/database').mongoConnect;
+const mongoConnect = require('./util/database');
 
 const User = require('./models/user');
 

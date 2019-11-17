@@ -134,7 +134,7 @@ exports.getAllProducts = (req, res, next) => {
 
   exports.getAddUser = (req, res, next) => {
     res.render('admin/add-user', {
-      docTitle: 'Add Product', 
+      docTitle: 'Add User', 
       path: '/admin/add-user'
     });
   }
