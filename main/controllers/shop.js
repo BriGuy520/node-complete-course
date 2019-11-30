@@ -51,7 +51,7 @@ exports.shopHome = (req, res, next) => {
 exports.showCart = (req, res, next) => {
   req.user.getCart()
   .then(cart => {
-    return cart.getProducts()
+    return cart.getProduct()
     .then(products => {
        res.render("shop/cart", {
         docTitle: "Cart",
@@ -88,6 +88,7 @@ exports.postCart = (req, res, next) => {
     })
     .then(result => {
       console.log(result);
+      res.redirect('/cart');
     })
 
   // let fetchedCart;
