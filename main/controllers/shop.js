@@ -48,21 +48,21 @@ exports.shopHome = (req, res, next) => {
   }).catch(err => console.log(err));
 }
 
-exports.showCart = (req, res, next) => {
-  req.user.getCart()
-  .then(cart => {
-    return cart.getProduct()
-    .then(products => {
-       res.render("shop/cart", {
-        docTitle: "Cart",
-        path: "/cart",
-        products: products
-      });
-    })
-    .catch(err => console.log(err));
-  })
-  .catch(err => console.log(err));
-}
+// exports.showCart = (req, res, next) => {
+//   req.user.getCart()
+//   .then(cart => {
+//     return cart.getProduct()
+//     .then(products => {
+//        res.render("shop/cart", {
+//         docTitle: "Cart",
+//         path: "/cart",
+//         products: products
+//       });
+//     })
+//     .catch(err => console.log(err));
+//   })
+//   .catch(err => console.log(err));
+// }
 
 exports.getCart = (req, res, next) => {
   req.user
@@ -87,7 +87,6 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then(result => {
-      console.log(result);
       res.redirect('/cart');
     })
 
