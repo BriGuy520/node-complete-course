@@ -47,7 +47,6 @@ class Product {
     return db.collection('product').find({ _id: new mongodb.ObjectId(id) })
       .next()
       .then(product => {
-        console.log(product);
         return product;
       })
       .catch(err => console.log(err));
