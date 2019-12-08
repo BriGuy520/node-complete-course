@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const handlebars = require('express-handlebars');
 const path = require('path');
@@ -6,7 +7,7 @@ const path = require('path');
 const app = express();
 
 const errorController = require("./controllers/errors");
-const mongoConnect = require('./util/database').mongoConnect;
+// const mongoConnect = require('./util/database').mongoConnect;
 
 const User = require('./models/user');
 
@@ -45,14 +46,16 @@ app.use((req, res, next) => {
   .catch(err => console.log(err));
 });
 
-app.use('/admin', adminRoutes);
-app.use(shopRoutes);
+// app.use('/admin', adminRoutes);
+// app.use(shopRoutes);
 
 app.use(errorController.errors);
 
-mongoConnect(() => {
+mongoose.connect('mongodb://localhost:27017/node-course').then(result => {
   app.listen(3000);
-});
+  console.log("Connected!");
+})
+.catch(err => console.log(err));
 
 // Product.belongsTo(User,{
 //   constraints: true,
