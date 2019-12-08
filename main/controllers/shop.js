@@ -157,7 +157,7 @@ exports.postOrder = (req, res, next) => {
 
 exports.showOrders = (req, res, next) => {
 
-  req.user.getOrders({ include: ['products']})
+  req.user.getOrders()
     .then(orders => {
       res.render("shop/orders", {
         docTitle: "Orders",
