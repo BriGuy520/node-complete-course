@@ -1,14 +1,23 @@
 const Products = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-  Products.fetchAll()
+  // Products.fetchAll()
+  // .then(products => {
+  //   res.render('shop/product-list', { 
+  //     prods: products, 
+  //     docTitle: 'All Products', 
+  //     path: "/products"
+  //   });
+  // }).catch(err => console.log(err));  
+
+  Products.find()
   .then(products => {
-    res.render('shop/product-list', { 
-      prods: products, 
-      docTitle: 'All Products', 
-      path: "/products"
-    });
-  }).catch(err => console.log(err));  
+    res.render('shop/product-list', {
+      prods: products,
+      docTitle: 'All Products',
+      path: '/products'
+    })
+  })
  }
 
  exports.getProduct = (req, res, next) => {
@@ -38,7 +47,16 @@ exports.getProducts = (req, res, next) => {
 }
 
 exports.shopHome = (req, res, next) => {
-  Products.fetchAll()
+  // Products.fetchAll()
+  // .then(products => {
+  //   res.render('shop/index', { 
+  //     prods: products, 
+  //     docTitle: 'Shop', 
+  //     path: "/"
+  //   });
+  // }).catch(err => console.log(err));
+
+  Products.find()
   .then(products => {
     res.render('shop/index', { 
       prods: products, 

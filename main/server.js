@@ -9,8 +9,6 @@ const app = express();
 const errorController = require("./controllers/errors");
 // const mongoConnect = require('./util/database').mongoConnect;
 
-// const User = require('./models/user');
-
 // const sequelize = require('./util/database');
 
 // const Product = require('./models/product');
@@ -47,7 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use(shopRoutes);
 
 app.use(errorController.errors);
 
