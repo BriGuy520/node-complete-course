@@ -9,7 +9,7 @@ const app = express();
 const errorController = require("./controllers/errors");
 // const mongoConnect = require('./util/database').mongoConnect;
 
-const User = require('./models/user');
+// const User = require('./models/user');
 
 // const sequelize = require('./util/database');
 
@@ -37,16 +37,16 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-  User.findById("5de1eed35e79a2730078a2f9")
-  .then(user => {
-    req.user = new User(user.name, user.email, user.cart, user._id);
-    next();
-  })
-  .catch(err => console.log(err));
-});
+// app.use((req, res, next) => {
+//   User.findById("5de1eed35e79a2730078a2f9")
+//   .then(user => {
+//     req.user = new User(user.name, user.email, user.cart, user._id);
+//     next();
+//   })
+//   .catch(err => console.log(err));
+// });
 
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 // app.use(shopRoutes);
 
 app.use(errorController.errors);

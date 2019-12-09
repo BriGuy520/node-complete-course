@@ -17,14 +17,14 @@ const productSchema = new Schema({
     type: Number,
     required: true
   },
-  image: {
+  imageURL: {
     type: String,
     required: true
   }
 });
 
 
-module.exports = productSchema;
+module.exports = mongoose.model('Products', productSchema);
 
 
 // class Product {
