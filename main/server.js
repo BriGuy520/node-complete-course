@@ -12,7 +12,7 @@ const errorController = require("./controllers/errors");
 // const sequelize = require('./util/database');
 
 // const Product = require('./models/product');
-// const User = require('./models/user');
+const User = require('./models/user');
 // const Cart = require('./models/cart');
 // const CartItem = require('./models/cart-item');
 // const Order = require('./models/order');
@@ -35,14 +35,14 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//   User.findById("5de1eed35e79a2730078a2f9")
-//   .then(user => {
-//     req.user = new User(user.name, user.email, user.cart, user._id);
-//     next();
-//   })
-//   .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("5df56a884e4cc520e8758e30")
+  .then(user => {
+    req.user = user;
+    next();
+  })
+  .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -50,6 +50,20 @@ app.use(shopRoutes);
 app.use(errorController.errors);
 
 mongoose.connect('mongodb://localhost:27017/node-course').then(result => {
+
+  User.findOne().then(user => {
+    if(!user){
+      const user = new User({
+        username: "Brian",
+        email: 'brian@example.com',
+        cart: {
+          items: []
+        }
+      });
+      user.save();
+    }
+  });
+
   app.listen(3000);
   console.log("Connected!");
 })
