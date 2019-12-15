@@ -10,8 +10,8 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const { title, imageURL, price, description } = req.body;
-  const product = new Products({ title: title, price: price, description: description, imageURL: imageURL });
+  const { title, imageURL, price, description} = req.body;
+  const product = new Products({ title: title, price: price, description: description, imageURL: imageURL, userId: req.user });
   product.save()
     .then(result => {
       res.redirect('/admin/products');
@@ -113,6 +113,8 @@ exports.postDeleteProduct = (req, res, next) => {
 exports.getAllProducts = (req, res, next) => {
 
   Products.find()
+  // .select("title price - _id")
+  // .populate('userId')
   .then(products => {
     res.render('admin/products', {
       prods: products,
