@@ -18,6 +18,14 @@ const userSchema = new Schema({
         quantity: { type: Number, required: true }
       }
     ]
+  },
+  order: {
+    items: [
+      {
+        productId: { type: Schema.Types.ObjectId, ref: "Products", required: true },
+        quantity: { type: Number, required: true }
+      }
+    ]
   }
 });
 
@@ -54,6 +62,17 @@ userSchema.methods.removeFromCart = function(productId){
 
   this.cart.items = updatedCartItems;
   return this.save();
+}
+
+
+userSchema.methods.addOrder = function(){
+
+    const newOrder = {
+      items: this.cart.items
+    }
+
+    this.order = newOrder;
+    return this.save();
 }
 
 module.exports = mongoose.model("User", userSchema);

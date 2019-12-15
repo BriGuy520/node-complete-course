@@ -179,8 +179,12 @@ exports.postOrder = (req, res, next) => {
 
 exports.showOrders = (req, res, next) => {
 
-  req.user.getOrders()
-    .then(orders => {
+  req.user
+  .populate('order.items.productId')
+  .execPopulate()
+    .then(user => {
+      const orders = user.order.items;
+      console.log(orders);
       res.render("shop/orders", {
         docTitle: "Orders",
         path: "/orders",
