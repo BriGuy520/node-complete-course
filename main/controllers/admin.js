@@ -10,11 +10,12 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const { title, imageURL, price, description } = req.body;
-  const product = new Products(title, price, description, imageURL, null, req.user._id );
+  const { title, imageURL, price, description} = req.body;
+  const product = new Products({ title: title, price: price, description: description, imageURL: imageURL, userId: req.user });
   product.save()
     .then(result => {
       res.redirect('/admin/products');
+      console.log("created Product!");
     })
     .catch(err => {
       console.log(err);
@@ -76,11 +77,17 @@ exports.postEditProducts = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedDesc = req.body.description;
   // const updatedProduct = new Products(prodId, updatedTitle, updatedImageURL, updatedPrice, updatedDesc);
-  const product = new Products(updatedTitle, updatedPrice, updatedDesc, updatedImageURL, prodId);
+
+  // const product = new Products(updatedTitle, updatedPrice, updatedDesc, updatedImageURL, prodId);
+Products.findById(prodId).then(product => {
+  product.title = updatedTitle;
+  product.price = updatedPrice;
+  product.description = updatedDesc;
+  product.imageURL = updatedImageURL;
+  return product.save();
+})
 
   // Products.findByPk(prodId)
-  product
-  .save()
   .then(result => {
     console.log("PRODUCT UPDATED");
     res.redirect('/admin/products');
@@ -93,7 +100,8 @@ exports.postDeleteProduct = (req, res, next) => {
 
   // Products.removeProduct(prodId);
   // Products.findByPk(prodId)
-  Products.deleteProduct(prodId)
+  // Products.deleteProduct(prodId)
+  Products.findByIdAndRemove(prodId)
   .then(result => {
     console.log("Product destroyed");
     res.redirect('/admin/products');
@@ -103,15 +111,28 @@ exports.postDeleteProduct = (req, res, next) => {
 }
 
 exports.getAllProducts = (req, res, next) => {
-  Products.fetchAll()
-   .then(products => {
-    res.render('admin/products', { 
-      prods: products, 
-      docTitle: 'All Admin Products', 
+
+  Products.find()
+  // .select("title price - _id")
+  // .populate('userId')
+  .then(products => {
+    res.render('admin/products', {
+      prods: products,
+      docTitle: 'Admin Products',
       path: "/admin/products"
     });
   })
-  .catch(err => console.log(err));
+
+
+  // Products.fetchAll()
+  //  .then(products => {
+  //   res.render('admin/products', { 
+  //     prods: products, 
+  //     docTitle: 'All Admin Products', 
+  //     path: "/admin/products"
+  //   });
+  // })
+  // .catch(err => console.log(err));
   
   // req.user.getProducts()
   // // Products.findAll()
@@ -134,7 +155,7 @@ exports.getAllProducts = (req, res, next) => {
 
   exports.getAddUser = (req, res, next) => {
     res.render('admin/add-user', {
-      docTitle: 'Add Product', 
+      docTitle: 'Add User', 
       path: '/admin/add-user'
     });
   }

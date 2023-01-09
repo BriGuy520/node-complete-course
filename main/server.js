@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 // const handlebars = require('express-handlebars');
 const path = require('path');
@@ -6,14 +7,12 @@ const path = require('path');
 const app = express();
 
 const errorController = require("./controllers/errors");
-const mongoConnect = require('./util/database').mongoConnect;
-
-const User = require('./models/user');
+// const mongoConnect = require('./util/database').mongoConnect;
 
 // const sequelize = require('./util/database');
 
 // const Product = require('./models/product');
-// const User = require('./models/user');
+const User = require('./models/user');
 // const Cart = require('./models/cart');
 // const CartItem = require('./models/cart-item');
 // const Order = require('./models/order');
@@ -36,23 +35,39 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//   User.findById("5d3d238afaa20e2a80006ed3")
-//   .then(user => {
-//     req.user = new User(user.name, user.email, user.cart, user._id);
-//     next();
-//   })
-//   .catch(err => console.log(err));
-// });
+app.use((req, res, next) => {
+  User.findById("5df56a884e4cc520e8758e30")
+  .then(user => {
+    req.user = user;
+    next();
+  })
+  .catch(err => console.log(err));
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use(errorController.errors);
 
-mongoConnect(() => {
+mongoose.connect('mongodb://localhost:27017/node-course').then(result => {
+
+  User.findOne().then(user => {
+    if(!user){
+      const user = new User({
+        username: "Brian",
+        email: 'brian@example.com',
+        cart: {
+          items: []
+        }
+      });
+      user.save();
+    }
+  });
+
   app.listen(3000);
-});
+  console.log("Connected!");
+})
+.catch(err => console.log(err));
 
 // Product.belongsTo(User,{
 //   constraints: true,
